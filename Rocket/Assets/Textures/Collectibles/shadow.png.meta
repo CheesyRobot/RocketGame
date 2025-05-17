@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 58ac93e1c0092176caffe068dd91acb7
+guid: 588e48f71f7b60835b3da879e8c31690
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8954015744061111943
-    second: Colorful-Shield-Emoji-Concept-PNG_0
-  - first:
-      213: 2507165331074723350
-    second: Colorful-Shield-Emoji-Concept-PNG_1
+      213: -4756028443593143600
+    second: shadow_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Colorful-Shield-Emoji-Concept-PNG_0
+      name: shadow_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 512
-        height: 512
+        x: 5
+        y: 6
+        width: 390
+        height: 392
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e43719d86b7f87cfeb1942a8ce41d26f
-      internalID: -1900396790
+      spriteID: 0da0afd34513ffdb0800000000000000
+      internalID: -4756028443593143600
       vertices: []
       indices: 
       edges: []
@@ -128,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7fd06c41c8ea4e5eaaf28d0e6d37fe40
+    spriteID: af0f8a70ea158acfb8bec55f96d31bf1
     internalID: 0
     vertices: []
     indices: 
@@ -138,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Colorful-Shield-Emoji-Concept-PNG_0: -1900396790
+      shadow_0: -4756028443593143600
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

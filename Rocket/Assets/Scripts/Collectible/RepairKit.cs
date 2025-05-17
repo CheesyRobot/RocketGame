@@ -8,4 +8,8 @@ public class RepairKit : MonoBehaviour, ICollectible
         Destroy(gameObject);
         return true;
     }
+
+    public void SetValues(int amount) {
+        this.amount = amount;
+    }
 }

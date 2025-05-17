@@ -4,6 +4,7 @@ public class Collector : MonoBehaviour
 {
     [SerializeField] private Transform interactionPoint;
     [SerializeField] private float interactionRadius;
+    [SerializeField] private float coinRadius;
     [SerializeField] private LayerMask interactionMask;
 
     private Collider2D collider;
@@ -18,5 +19,24 @@ public class Collector : MonoBehaviour
                 interactable.Collect(this);
             }
         }
+        
+        // separate check for coin magnet
+        collider = Physics2D.OverlapCircle(interactionPoint.position, coinRadius, interactionMask);
+        if (collider != null)
+        {
+            var interactable = collider.GetComponent<Coin>();
+            if (interactable != null)
+            {
+                interactable.Collect(this);
+            }
+        }
+    }
+
+    public void SetRadius(float radius) {
+        coinRadius = radius;
+    }
+
+    public void ResetRadius() {
+        coinRadius = interactionRadius;
     }
 }
