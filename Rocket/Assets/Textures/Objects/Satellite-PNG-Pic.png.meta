@@ -159,7 +159,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Satellite-PNG-Pic_0: 7794595028582608531
+      Satellite-PNG-Pic_1: -3314691614642492126
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Tools-Vector-Background-PNG_0: -6316238311089814375
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

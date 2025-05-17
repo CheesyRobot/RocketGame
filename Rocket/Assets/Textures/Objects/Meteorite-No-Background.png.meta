@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Meteorite-No-Background_0: -1513860957363109942
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
