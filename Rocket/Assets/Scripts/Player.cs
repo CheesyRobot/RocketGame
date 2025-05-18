@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private DisplayBar HealthBar;
     [SerializeField] private GameObject Exhaust;
     [SerializeField] private LayerMask CollidableMask;
+    [SerializeField] SpriteRenderer FinsRenderer;
     private float fuel;
     private int maxFuel;
     private float health;
@@ -119,9 +120,11 @@ public class Player : MonoBehaviour
 
     public IEnumerator ShadowForm(float duration) {
         GetComponent<SpriteRenderer>().material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 0.5f));
+        FinsRenderer.material.SetColor("_Color", new Color(0.5f, 0.5f, 0.5f, 0.5f));
         GetComponent<Rigidbody2D>().excludeLayers = CollidableMask;
         yield return new WaitForSeconds(duration);
         GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.white);
+        FinsRenderer.material.SetColor("_Color", Color.red);
         GetComponent<Rigidbody2D>().excludeLayers = 0;
     }
 
