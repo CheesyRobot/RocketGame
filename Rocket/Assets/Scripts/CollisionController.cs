@@ -15,7 +15,7 @@ public class CollisionController : MonoBehaviour
         {
             float damage = (GetComponent<Rigidbody2D>().linearVelocity - collision.gameObject.GetComponent<Rigidbody2D>().linearVelocity).magnitude;
             GetComponent<Player>().RestoreHealth(-damage * damageMultiplier);
-            StartCoroutine(hitCooldown(2));
+            StartCoroutine(hitCooldown(1));
         }
     }
 

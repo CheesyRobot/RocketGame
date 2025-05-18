@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,17 +12,19 @@ public class Player : MonoBehaviour
     public float fuelConsumption;
     [SerializeField] private DisplayBar FuelBar;
     [SerializeField] private DisplayBar HealthBar;
+    [SerializeField] private TextMeshProUGUI HeightText;
+    [SerializeField] private TextMeshProUGUI CoinsText;
     [SerializeField] private GameObject Exhaust;
     [SerializeField] private LayerMask CollidableMask;
     [SerializeField] SpriteRenderer FinsRenderer;
     private float fuel;
     private int maxFuel;
-    private float health;
+    public float health;
     private int maxHealth;
-    private int heightScore;
+    public int heightScore;
+    private int coinsCollected;
     private int speedBoostCount;
     private Vector2 speed;
-    public Vector3 rotationValue;
     private Rigidbody2D rb2d;
     private float defaultDampening;
 
@@ -38,6 +41,9 @@ public class Player : MonoBehaviour
         Move();
         if (Input.GetKeyDown(KeyCode.Space))
             ActivateSpeedBoost(2, 1);
+        heightScore = Math.Max(heightScore, (int)rb2d.position.y);
+        HeightText.text = ((int) rb2d.position.y).ToString() + " m";
+        CoinsText.text = coinsCollected.ToString();
     }
 
     private void Move() {
@@ -52,7 +58,7 @@ public class Player : MonoBehaviour
         float forward = verticalInput > 0? verticalInput : 0;
         speed = rb2d.linearVelocity;
         Vector3 rotation = transform.rotation * new Vector3(0,1,0);
-        if (speed.magnitude < maxSpeed) {
+        if (speed.magnitude < maxSpeed && fuel >= 0.00001) {
             speed.x += forward * acceleration / 100 * rotation.x;
             speed.y += forward * acceleration / 100 * rotation.y;
         }
@@ -64,7 +70,7 @@ public class Player : MonoBehaviour
         rb2d.linearDamping = defaultDampening + braking;
         rb2d.linearVelocity = new Vector2(speed.x, speed.y);
 
-        if(verticalInput > 0) {
+        if(verticalInput > 0 && fuel >= 0.00001) {
             Exhaust.SetActive(true);
             RestoreFuel(-fuelConsumption / 1000);
         }
@@ -79,6 +85,7 @@ public class Player : MonoBehaviour
         fuel = 100;
         speedBoostCount = 0;
         heightScore = 0;
+        coinsCollected = 0;
     }
 
     public void RestoreHealth(float amount) {
@@ -91,6 +98,10 @@ public class Player : MonoBehaviour
         fuel += amount;
         fuel = Mathf.Clamp(fuel, 0, maxFuel);
         FuelBar.SetValue(fuel, maxFuel);
+    }
+
+    public void AddCoins(int amount) {
+        coinsCollected += amount;
     }
 
     public void ActivateMagnet(float duration, float radius) {

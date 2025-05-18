@@ -19,7 +19,7 @@ public class TimeSpawner : MonoBehaviour, Spawner
         }
         if (clock > duration) {
             clock = 0;
-            SpawnItem();
+            this.SpawnItem();
         }
         
     }
