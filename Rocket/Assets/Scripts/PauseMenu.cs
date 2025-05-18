@@ -38,8 +38,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void EndGame()
     {
-        Time.timeScale = 1;
-        isPaused = false;
+        Unpause();
         SceneManager.LoadScene(0);
     }
 
