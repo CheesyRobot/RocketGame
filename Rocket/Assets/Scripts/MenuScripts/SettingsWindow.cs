@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,14 +6,26 @@ public class SettingsWindow : MonoBehaviour
 {
     [SerializeField] GameObject MainMenu;
     [SerializeField] Image FinsImage;
+    [SerializeField] TMP_InputField inputName;
+    Color rocketColor = Color.red;
+    string rocketName = "a";
+    double volumeValue;
+    RocketStartingProfile profile = RocketStartingProfile.GetInstance();
+
+    private void Start()
+    {
+        rocketName = profile.playerName;
+        rocketColor = profile.rocketColor;
+        inputName.SetTextWithoutNotify(rocketName);
+    }
     public void RocketName()
     {
-
+        rocketName = inputName.text;
+        profile.playerName = rocketName;
     }
 
     public void RocketColor(Button button)
     {
-        Color rocketColor;
         Debug.Log(button.name);
         switch (button.name)
         {
@@ -44,10 +57,10 @@ public class SettingsWindow : MonoBehaviour
                 rocketColor = Color.yellow;
                 break;
             default:
-                rocketColor = Color.red;
                 break;
         }
         FinsImage.color = rocketColor;
+        profile.rocketColor = rocketColor;
     }
 
     public void Volume()
