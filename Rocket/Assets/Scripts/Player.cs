@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     public int heightScore;
     private int coinsCollected;
     private int speedBoostCount;
+    private bool shieldActive;
     private Vector2 speed;
     private Rigidbody2D rb2d;
     private float defaultDampening;
@@ -86,9 +87,15 @@ public class Player : MonoBehaviour
         speedBoostCount = 0;
         heightScore = 0;
         coinsCollected = 0;
+        shieldActive = false;
     }
 
     public void RestoreHealth(float amount) {
+        if (amount < 0 && shieldActive) {
+            amount = 0;
+            shieldActive = false;
+            GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.white);
+        }
         health += amount;
         health = Mathf.Clamp(health, 0, maxHealth);
         HealthBar.SetValue(health, maxHealth);
@@ -113,7 +120,7 @@ public class Player : MonoBehaviour
     }
 
     public void ActivateForcefield(float duration) {
-        GetComponent<CollisionController>().SetHitCooldown(duration);
+        //GetComponent<CollisionController>().SetHitCooldown(duration);
         StartCoroutine(Forcefield(duration));
     }
 
@@ -140,8 +147,10 @@ public class Player : MonoBehaviour
     }
 
     public IEnumerator Forcefield(float duration) {
+        shieldActive = true;
         GetComponent<SpriteRenderer>().material.SetColor("_Color", new Color(0.5f, 0.5f, 1f, 1f));
         yield return new WaitForSeconds(duration);
+        shieldActive = false;
         GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.white);
     }
 
