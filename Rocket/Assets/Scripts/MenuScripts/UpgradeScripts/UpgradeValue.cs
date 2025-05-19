@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class UpgradeValue : Decorator
 {
-    int value = 0;
-    public UpgradeValue(ShopUpgrade shopUpgrade, int value)
+    float value = 0;
+    public UpgradeValue(ShopUpgrade shopUpgrade, float value)
             : base(shopUpgrade)
     {
         this.value = value;
@@ -11,10 +11,10 @@ public class UpgradeValue : Decorator
     public override int UpgradeBought()
     {
         if (base.UpgradeBought() == -1) isSoldOut = true;
-        return value;
+        return (int)value;
     }
 
-    public override int GetValue()
+    public override float GetValue()
     {
         return value;
     }

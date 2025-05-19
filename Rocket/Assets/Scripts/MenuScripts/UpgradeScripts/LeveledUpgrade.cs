@@ -27,7 +27,7 @@ public class LeveledUpgrade : Decorator
         return level;
     }
 
-    public override int GetValue()
+    public override float GetValue()
     {
         return level;
     }

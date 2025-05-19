@@ -16,6 +16,7 @@ public class SettingsWindow : MonoBehaviour
     {
         rocketName = profile.playerName;
         rocketColor = profile.rocketColor;
+        FinsImage.color = rocketColor;
         inputName.SetTextWithoutNotify(rocketName);
     }
     public void RocketName()

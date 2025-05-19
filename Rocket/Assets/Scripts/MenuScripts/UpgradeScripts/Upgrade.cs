@@ -30,7 +30,7 @@ class Upgrade : ShopUpgrade
         return cost;
     }
 
-    public override int GetValue()
+    public override float GetValue()
     {
         return isSoldOut ? 1 : -1;
     }

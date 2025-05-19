@@ -17,7 +17,7 @@ public class Decorator : ShopUpgrade
         return shopUpgrade.GetCost();
     }
 
-    public override int GetValue()
+    public override float GetValue()
     {
         return shopUpgrade.GetValue();
     }

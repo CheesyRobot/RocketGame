@@ -19,7 +19,7 @@ public class UpgradeCosts : Decorator
     }
 
     /// <returns>Current index</returns>
-    public override int GetValue()
+    public override float GetValue()
     {
         return base.GetValue();
     }

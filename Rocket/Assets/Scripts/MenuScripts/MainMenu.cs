@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -44,5 +45,22 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Exit button");
         Application.Quit();
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current.numpad0Key.wasPressedThisFrame)
+        {
+            SaveSystem.Save();
+            Debug.Log(RocketStartingProfile.GetInstance().playerName);
+            Debug.Log("Saved");
+        }
+
+        if (Keyboard.current.numpad1Key.wasPressedThisFrame)
+        {
+            SaveSystem.Load();
+            Debug.Log("Loaded");
+            Debug.Log(RocketStartingProfile.GetInstance().playerName);
+        }
     }
 }

@@ -44,3 +44,16 @@ public class ShopWindow : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
+
+[System.Serializable]
+public class UpgradeData
+{
+    public string name;
+    public string description;
+    public int cost;
+    public int level;
+    public bool isSoldOut;
+    public int[] Values;
+    public int[] Costs;
+    public int maxLevel;
+}

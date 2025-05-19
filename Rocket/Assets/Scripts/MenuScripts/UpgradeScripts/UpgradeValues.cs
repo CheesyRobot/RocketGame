@@ -19,9 +19,9 @@ public class UpgradeValues : Decorator
         return -1;
     }
 
-    public override int GetValue()
+    public override float GetValue()
     {
-        int index = base.GetValue();
+        int index = (int)base.GetValue();
         if (index < Values.Length && index >= 0)
         {
             return Values[index];

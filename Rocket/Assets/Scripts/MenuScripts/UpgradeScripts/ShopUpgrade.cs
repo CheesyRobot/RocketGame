@@ -9,7 +9,7 @@ public abstract class ShopUpgrade
     public bool isSoldOut;
     public abstract int UpgradeBought();
     public abstract int GetCost();
-    public abstract int GetValue();
+    public abstract float GetValue();
     public abstract int GetLevel();
     public abstract bool IsSoldOut();
 }

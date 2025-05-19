@@ -24,8 +24,9 @@ public class RocketStartingProfile
         healthValue = 100;
         engineValue = 1;
         flapValue = 1;
+        headValue = 5;
         fuelValue = 100;
-        passiveRepairValue = 0;
+        passiveRepairValue = 3;
         hasEngineer = false;
         hasDetector = false;
         rocketColor = Color.red;
@@ -34,7 +35,9 @@ public class RocketStartingProfile
     public static RocketStartingProfile GetInstance()
     {
         if (instance == null)
+        { 
             instance = new RocketStartingProfile();
+        }
         return instance;
     }
 
@@ -44,4 +47,51 @@ public class RocketStartingProfile
         RocketStartingProfile a = GetInstance();
     }
 
+    public void Save(ref ProfileData data)
+    {
+        data.playerName = playerName;
+        data.money = money;
+        data.healthValue = healthValue;
+        data.engineValue = engineValue;
+        data.flapValue = flapValue;
+        data.headValue = headValue;
+        data.fuelValue = fuelValue;
+        data.passiveRepairValue = passiveRepairValue;
+        data.hasEngineer = hasEngineer;
+        data.hasDetector = hasDetector;
+        data.rocketColor = rocketColor;
+    }
+
+    public void Load(ProfileData data)
+    {
+        GetInstance();
+        playerName = data.playerName;
+        money = data.money;
+        healthValue = data.healthValue;
+        engineValue = data.engineValue;
+        flapValue = data.flapValue;
+        headValue = data.headValue;
+        fuelValue = data.fuelValue;
+        passiveRepairValue = data.passiveRepairValue;
+        hasEngineer = data.hasEngineer;
+        hasDetector = data.hasDetector;
+        rocketColor = data.rocketColor;
+    }
+
+}
+
+[System.Serializable]
+public struct ProfileData
+{
+    public string playerName;
+    public int money;
+    public int healthValue;
+    public float engineValue;
+    public float flapValue;
+    public int headValue;
+    public int fuelValue;
+    public int passiveRepairValue;
+    public bool hasEngineer;
+    public bool hasDetector;
+    public Color rocketColor;
 }
