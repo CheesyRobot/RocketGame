@@ -14,32 +14,32 @@ public class GameState : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
-            PauseGame();
+            Pause();
         if (player.health <= 0.00001 && !isPaused)
-            PauseEndGame();
+            PauseBreak();
     }
 
-    private void PauseGame() 
+    public void Pause() 
     {
         if (PausePanel != null)
             PausePanel.SetActive(true);
-        Pause();
+        PauseTime();
     }
 
-    private void PauseEndGame() {
+    public void PauseBreak() {
         if (PauseBreakPanel != null)
             PauseBreakPanel.SetActive(true);
-        Pause();
+        PauseTime();
     }
 
 
-    public void UnpauseGame()
+    public void Unpause()
     {
         if (PausePanel != null)
             PausePanel.SetActive(false);
-        Unpause();
+        UnpauseTime();
     }
-    public void EndGame()
+    public void Quit()
     {
         PauseBreakPanel.SetActive(false);
         PausePanel.SetActive(false);
@@ -48,12 +48,12 @@ public class GameState : MonoBehaviour
         StartCoroutine("End");
     }
 
-    private void Pause() 
+    private void PauseTime() 
     {
         Time.timeScale = 0;
         isPaused = true;
     }
-    private void Unpause()
+    private void UnpauseTime()
     {
         Time.timeScale = 1;
         isPaused = false;
@@ -63,7 +63,7 @@ public class GameState : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(2);
         //EndPanel.SetActive(false);
-        Unpause();
+        UnpauseTime();
         SceneManager.LoadScene(0);
     }
 }
