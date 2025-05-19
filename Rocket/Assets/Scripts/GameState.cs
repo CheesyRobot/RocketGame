@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
-public class PauseMenu : MonoBehaviour
+public class GameState : MonoBehaviour
 {
     public GameObject PausePanel;
-    public GameObject PauseEndPanel;
+    public GameObject PauseBreakPanel;
+    public GameObject EndPanel;
+    
     public Player player;
     private bool isPaused = false;
 
@@ -12,20 +15,20 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
             PauseGame();
-        if (player.health <= 0.00001)
+        if (player.health <= 0.00001 && !isPaused)
             PauseEndGame();
     }
 
-    public void PauseGame() 
+    private void PauseGame() 
     {
         if (PausePanel != null)
             PausePanel.SetActive(true);
         Pause();
     }
 
-    public void PauseEndGame() {
-        if (PauseEndPanel != null)
-            PauseEndPanel.SetActive(true);
+    private void PauseEndGame() {
+        if (PauseBreakPanel != null)
+            PauseBreakPanel.SetActive(true);
         Pause();
     }
 
@@ -38,8 +41,11 @@ public class PauseMenu : MonoBehaviour
     }
     public void EndGame()
     {
-        Unpause();
-        SceneManager.LoadScene(0);
+        PauseBreakPanel.SetActive(false);
+        PausePanel.SetActive(false);
+        EndPanel.SetActive(true);
+        //Unpause();
+        StartCoroutine("End");
     }
 
     private void Pause() 
@@ -53,5 +59,11 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
     }
 
-
+    IEnumerator End()
+    {
+        yield return new WaitForSecondsRealtime(2);
+        //EndPanel.SetActive(false);
+        Unpause();
+        SceneManager.LoadScene(0);
+    }
 }

@@ -17,12 +17,12 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Exhaust;
     [SerializeField] private LayerMask CollidableMask;
     [SerializeField] SpriteRenderer FinsRenderer;
-    private float fuel;
+    public float fuel;
     private int maxFuel;
     public float health;
     private int maxHealth;
     public int heightScore;
-    private int coinsCollected;
+    public int coinsCollected;
     private int speedBoostCount;
     private bool shieldActive;
     private Vector2 speed;
