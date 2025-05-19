@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     private int maxHealth;
     public int heightScore;
     public int coinsCollected;
-    private int speedBoostCount;
+    private bool speedBoost;
     private bool shieldActive;
     private Vector2 speed;
     private Rigidbody2D rb2d;
@@ -59,14 +59,18 @@ public class Player : MonoBehaviour
         float forward = verticalInput > 0? verticalInput : 0;
         speed = rb2d.linearVelocity;
         Vector3 rotation = transform.rotation * new Vector3(0,1,0);
-        if (speed.magnitude < maxSpeed && fuel >= 0.00001) {
+        // if (speed.magnitude < maxSpeed && fuel >= 0.00001) {
+        //     speed.x += forward * acceleration / 100 * rotation.x;
+        //     speed.y += forward * acceleration / 100 * rotation.y;
+        // }
+        if (fuel >= 0.00001) {
             speed.x += forward * acceleration / 100 * rotation.x;
             speed.y += forward * acceleration / 100 * rotation.y;
         }
         // speed.x += forward * acceleration * rotation.x;
         // speed.y += forward * acceleration * rotation.y;
-        // speed.x = Mathf.Clamp(speed.x, -maxSpeed, maxSpeed);
-        // speed.y = Mathf.Clamp(speed.y, -maxSpeed, maxSpeed);
+        speed.x = Mathf.Clamp(speed.x, -maxSpeed, maxSpeed);
+        speed.y = Mathf.Clamp(speed.y, -maxSpeed, maxSpeed);
 
         rb2d.linearDamping = defaultDampening + braking;
         rb2d.linearVelocity = new Vector2(speed.x, speed.y);
@@ -84,7 +88,7 @@ public class Player : MonoBehaviour
         health = 100;
         maxFuel = 100;
         fuel = 100;
-        speedBoostCount = 0;
+        speedBoost = false;
         heightScore = 0;
         coinsCollected = 0;
         shieldActive = false;
@@ -126,14 +130,14 @@ public class Player : MonoBehaviour
 
     private void ActivateSpeedBoost(float duration, float multiplier) {
         
-        if (speedBoostCount > 0) {
-            speedBoostCount--;
+        if (speedBoost) {
+            speedBoost = false;
             StartCoroutine(SpeedBoost(duration, multiplier));
         }
     }
 
     public void AddSpeedBoost() {
-        speedBoostCount++;
+        speedBoost = true;
     }
 
     public IEnumerator ShadowForm(float duration) {
@@ -156,6 +160,7 @@ public class Player : MonoBehaviour
 
     IEnumerator SpeedBoost(float duration, float multiplier) {
         float currentTime = 0;
+        maxSpeed *= 2;
         while (currentTime <= duration)
         {
             //rb2d.linearVelocity = rb2d.linearVelocity * multiplier;
@@ -165,6 +170,7 @@ public class Player : MonoBehaviour
             currentTime += Time.deltaTime;
             yield return null;
         }
+        maxSpeed /= 2;
     }
 
     IEnumerator Magnet(float duration, float radius) {
