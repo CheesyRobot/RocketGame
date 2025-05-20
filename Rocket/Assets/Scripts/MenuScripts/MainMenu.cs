@@ -8,9 +8,16 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject SessionsObj;
     [SerializeField] GameObject SettingObj;
     [SerializeField] GameObject HelpObj;
+    [SerializeField] GameObject NameObj;
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        if (SessionsProfile.Instance.Sessions.Count == 0)
+        {
+            NameObj.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else
+            SceneManager.LoadScene(1);
     }
 
     public void Shop()
@@ -45,22 +52,5 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Exit button");
         Application.Quit();
-    }
-
-    private void Update()
-    {
-        /*if (Keyboard.current.numpad0Key.wasPressedThisFrame)
-        {
-            SaveSystem.Instance.Save();
-            Debug.Log(RocketStartingProfile.Instance.playerName);
-            Debug.Log("Saved");
-        }
-
-        if (Keyboard.current.numpad1Key.wasPressedThisFrame)
-        {
-            SaveSystem.Load();
-            Debug.Log("Loaded");
-            Debug.Log(RocketStartingProfile.Instance.playerName);
-        }*/
     }
 }

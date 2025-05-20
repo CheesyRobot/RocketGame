@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
         GetComponent<Rigidbody2D>().excludeLayers = CollidableMask;
         yield return new WaitForSeconds(duration);
         GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.white);
-        FinsRenderer.material.SetColor("_Color", Color.red);
+        FinsRenderer.material.SetColor("_Color", Color.white);
         GetComponent<Rigidbody2D>().excludeLayers = 0;
     }
 
