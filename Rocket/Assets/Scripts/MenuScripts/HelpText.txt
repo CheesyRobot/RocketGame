@@ -1,20 +1,20 @@
-Rocket Journey yippee
+The goal of the game is to go as high as possible, collect money and get upgrades to get higher scores.
+Collect fuel to continue flying and avoid obstacles.
 
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Controls:
+W - go forward
+A - turn left
+D - turn right
+S - breaking
+SPACE - activate speed boost.
+
+Shop:
+Various upgrades to improve acceleration, damage resistance, fuel consumption and more.
+
+Sessions:
+Previous 10 game sessions, listed by most recent.
+
+Settings:
+Color, rocket name and volume settings.
+
+Rocket Journey @ Rokas Šimkūnas, Ieva Gaspariūnaitė
