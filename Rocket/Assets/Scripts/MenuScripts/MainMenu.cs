@@ -49,10 +49,10 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.numpad0Key.wasPressedThisFrame)
+        /*if (Keyboard.current.numpad0Key.wasPressedThisFrame)
         {
-            SaveSystem.Save();
-            Debug.Log(RocketStartingProfile.GetInstance().playerName);
+            SaveSystem.Instance.Save();
+            Debug.Log(RocketStartingProfile.Instance.playerName);
             Debug.Log("Saved");
         }
 
@@ -60,7 +60,7 @@ public class MainMenu : MonoBehaviour
         {
             SaveSystem.Load();
             Debug.Log("Loaded");
-            Debug.Log(RocketStartingProfile.GetInstance().playerName);
-        }
+            Debug.Log(RocketStartingProfile.Instance.playerName);
+        }*/
     }
 }

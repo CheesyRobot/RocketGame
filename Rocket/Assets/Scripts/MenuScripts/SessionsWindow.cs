@@ -11,26 +11,13 @@ public class SessionsWindow : MonoBehaviour
     [SerializeField] TextMeshProUGUI WindowName;
     [SerializeField] GameObject SessionRow;
     [SerializeField] GameObject SessionHolder;
-    List<Session> Sessions = new List<Session>();
+    List<Session> Sessions;
 
     public void Start()
     {
-        //Testiniai duomenys
-        AddSession("Vienas", 10, 822);
-        AddSession("Du", 5, 125);
-        AddSession("Trys", 15, 100);
-
-        WindowName.SetText($"Hello {RocketStartingProfile.GetInstance().playerName}!");
+        Sessions = SessionsProfile.Instance.Sessions;
+        WindowName.SetText($"Hello {RocketStartingProfile.Instance.playerName}!");
         DisplaySessions();
-    }
-
-    public void AddSession(string PlayerName, int ReachedHeight, int GottenMoney)
-    {
-        Sessions.Insert(0, new Session(PlayerName, ReachedHeight, GottenMoney));
-        if (Sessions.Count > 10)
-        {
-            Sessions.RemoveAt(10);
-        }
     }
 
     public void DisplaySessions()

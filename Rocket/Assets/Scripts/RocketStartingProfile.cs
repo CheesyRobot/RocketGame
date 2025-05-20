@@ -1,9 +1,22 @@
 using System;
 using UnityEngine;
 
-public class RocketStartingProfile
+public class RocketStartingProfile : MonoBehaviour
 {
     private static RocketStartingProfile instance;
+    public static RocketStartingProfile Instance
+    {
+        get
+        {
+            if (!instance)
+            {
+                instance = new GameObject().AddComponent<RocketStartingProfile>();
+                instance.name = instance.GetType().ToString();
+                DontDestroyOnLoad(instance.gameObject);
+            }
+            return instance;
+        }
+    }
 
     public string playerName { get; set; }
     public int money { get; set; }
@@ -16,6 +29,7 @@ public class RocketStartingProfile
     public bool hasEngineer { get; set; }
     public bool hasDetector { get; set; }
     public Color rocketColor { get; set; }
+    public int[] UpgradeLevels { get; set; }
 
     private RocketStartingProfile()
     {
@@ -30,21 +44,22 @@ public class RocketStartingProfile
         hasEngineer = false;
         hasDetector = false;
         rocketColor = Color.red;
+        UpgradeLevels = new int[6];
     }
 
-    public static RocketStartingProfile GetInstance()
+    /*public static RocketStartingProfile GetInstance()
     {
         if (instance == null)
         { 
             instance = new RocketStartingProfile();
         }
         return instance;
-    }
+    }*/
 
     public void AddMoney(int amount)
     {
         money += amount;
-        RocketStartingProfile a = GetInstance();
+        //RocketStartingProfile a = GetInstance();
     }
 
     public void Save(ref ProfileData data)
@@ -60,11 +75,11 @@ public class RocketStartingProfile
         data.hasEngineer = hasEngineer;
         data.hasDetector = hasDetector;
         data.rocketColor = rocketColor;
+        data.UpgradeLevels = UpgradeLevels;
     }
 
     public void Load(ProfileData data)
     {
-        GetInstance();
         playerName = data.playerName;
         money = data.money;
         healthValue = data.healthValue;
@@ -76,6 +91,7 @@ public class RocketStartingProfile
         hasEngineer = data.hasEngineer;
         hasDetector = data.hasDetector;
         rocketColor = data.rocketColor;
+        UpgradeLevels = data.UpgradeLevels;
     }
 
 }
@@ -94,4 +110,5 @@ public struct ProfileData
     public bool hasEngineer;
     public bool hasDetector;
     public Color rocketColor;
+    public int[] UpgradeLevels;
 }

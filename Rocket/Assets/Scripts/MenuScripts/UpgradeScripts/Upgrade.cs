@@ -1,11 +1,11 @@
 using UnityEngine;
 
-class Upgrade : ShopUpgrade
+public class Upgrade : ShopUpgrade
 {
     public Upgrade(string name, string description, int cost, bool isSoldOut)
     {
-        this.name = name;
-        this.description = description;
+        this.Name = name;
+        this.Description = description;
         this.cost = cost;
         this.isSoldOut = false;
         this.level = 0;
@@ -13,8 +13,8 @@ class Upgrade : ShopUpgrade
 
     public Upgrade()
     {
-        this.name = "name";
-        this.description = "description";
+        this.Name = "name";
+        this.Description = "description";
         this.cost = 100;
         this.isSoldOut = false;
         this.level = 0;
@@ -22,7 +22,18 @@ class Upgrade : ShopUpgrade
     public override int UpgradeBought()
     {
         isSoldOut = true;
+        level = 1;
         return cost;
+    }
+
+    public override string GetName()
+    {
+        return Name;
+    }
+
+    public override string GetDescription()
+    {
+        return Description;
     }
 
     public override int GetCost()

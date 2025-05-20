@@ -12,6 +12,16 @@ public class Decorator : ShopUpgrade
         return shopUpgrade.UpgradeBought();
     }
 
+    public override string GetName()
+    {
+        return shopUpgrade.GetName();
+    }
+
+    public override string GetDescription()
+    {
+        return shopUpgrade.GetDescription();
+    }
+
     public override int GetCost()
     {
         return shopUpgrade.GetCost();

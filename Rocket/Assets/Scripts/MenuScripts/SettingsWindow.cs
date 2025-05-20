@@ -10,19 +10,20 @@ public class SettingsWindow : MonoBehaviour
     Color rocketColor = Color.red;
     string rocketName = "a";
     double volumeValue;
-    RocketStartingProfile profile = RocketStartingProfile.GetInstance();
+    //[SerializeField] RocketStartingProfile profile;
+    //RocketStartingProfile profile = RocketStartingProfile.Instance;
 
     private void Start()
     {
-        rocketName = profile.playerName;
-        rocketColor = profile.rocketColor;
+        rocketName = RocketStartingProfile.Instance.playerName;
+        rocketColor = RocketStartingProfile.Instance.rocketColor;
         FinsImage.color = rocketColor;
         inputName.SetTextWithoutNotify(rocketName);
     }
     public void RocketName()
     {
         rocketName = inputName.text;
-        profile.playerName = rocketName;
+        RocketStartingProfile.Instance.playerName = rocketName;
     }
 
     public void RocketColor(Button button)
@@ -61,7 +62,7 @@ public class SettingsWindow : MonoBehaviour
                 break;
         }
         FinsImage.color = rocketColor;
-        profile.rocketColor = rocketColor;
+        RocketStartingProfile.Instance.rocketColor = rocketColor;
     }
 
     public void Volume()

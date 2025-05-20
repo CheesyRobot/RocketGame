@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class UpgradeValues : Decorator
 {
-    int[] Values = { 1, 2, 3, 4, 5 };
-    public UpgradeValues(ShopUpgrade shopUpgrade, int[] values)
+    float[] Values = { 1, 2, 3, 4, 5 };
+    public UpgradeValues(ShopUpgrade shopUpgrade, float[] values)
             : base(shopUpgrade)
     {
         this.Values = values;

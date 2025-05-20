@@ -44,8 +44,11 @@ public class GameState : MonoBehaviour
         PauseBreakPanel.SetActive(false);
         PausePanel.SetActive(false);
         EndPanel.SetActive(true);
+        RocketStartingProfile p = RocketStartingProfile.Instance;
+        p.money += player.coinsCollected;
+        SessionsProfile.Instance.AddSession(p.playerName, player.heightScore, player.coinsCollected);
         //Unpause();
-        StartCoroutine("End");
+        StartCoroutine("End"); 
     }
 
     private void PauseTime() 

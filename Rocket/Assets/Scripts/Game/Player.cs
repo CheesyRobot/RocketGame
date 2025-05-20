@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
         // heightScore = 0;
         // coinsCollected = 0;
         // shieldActive = false;
-        RocketStartingProfile p = RocketStartingProfile.GetInstance();
+        RocketStartingProfile p = RocketStartingProfile.Instance;
         maxHealth = p.healthValue;
         health = maxHealth;
         maxFuel = p.fuelValue;
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
         heightScore = 0;
         coinsCollected = 0;
         shieldActive = false;
-        FinsRenderer.material.SetColor("_Color", p.rocketColor);
+        FinsRenderer.color = p.rocketColor;
         MagnetCircle.SetActive(false);
         Exhaust.SetActive(false);
     }
