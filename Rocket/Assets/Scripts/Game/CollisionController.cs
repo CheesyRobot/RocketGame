@@ -33,6 +33,13 @@ public class CollisionController : MonoBehaviour
         timer = 0;
     }
 
+    private void OnTriggerEnter2D(Collider2D col) {
+        if (col.gameObject.name == "StormCloud" || col.gameObject.name == "StormCloud(Clone)") {
+            GetComponent<Player>().RestoreHealth(-1.5f * damageMultiplier);
+            GetComponent<Player>().GetComponent<Rigidbody2D>().linearVelocity *= 0.5f;
+        }
+    }
+
     private IEnumerator hitCooldown(float duration) {
         onCooldown = true;
         yield return new WaitForSeconds(duration);

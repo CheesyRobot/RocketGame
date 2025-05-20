@@ -17,6 +17,7 @@ public class HeightSpawner : MonoBehaviour, Spawner
             resourceFactory.CreateProduct(MyFuncs.RandomPosition(10, 10, 8, 10, player.transform));
             resourceFactory.CreateProduct(MyFuncs.RandomPosition(10, 10, 16, 18, player.transform));
             powerupFactory.CreateProduct(MyFuncs.RandomPosition(10, 10, 8, 18, player.transform));
+            
             bool success = false;
             int counter = 0;
             while (!success && counter < 5) {

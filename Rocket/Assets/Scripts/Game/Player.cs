@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] private TextMeshProUGUI HeightText;
     [SerializeField] private TextMeshProUGUI CoinsText;
     [SerializeField] private GameObject Exhaust;
+    [SerializeField] private GameObject MagnetCircle;
+    private RocketVisuals rv;
     [SerializeField] private LayerMask CollidableMask;
     [SerializeField] SpriteRenderer FinsRenderer;
     public float fuel {get; set;}
@@ -38,6 +40,8 @@ public class Player : MonoBehaviour
         InvokeRepeating("RepairPassive", 1f, 1f);
         rb2d = GetComponent<Rigidbody2D>();
         defaultDampening = rb2d.linearDamping;
+        rv = new BaseRocket(gameObject);
+        rv.Display();
     }
 
     void Update()
@@ -111,6 +115,7 @@ public class Player : MonoBehaviour
         coinsCollected = 0;
         shieldActive = false;
         FinsRenderer.material.SetColor("_Color", p.rocketColor);
+        MagnetCircle.SetActive(false);
         Exhaust.SetActive(false);
     }
 
@@ -177,11 +182,13 @@ public class Player : MonoBehaviour
     }
 
     public IEnumerator Forcefield(float duration) {
+        rv = new ForcefieldDecorator(rv, Exhaust);
         shieldActive = true;
         GetComponent<SpriteRenderer>().material.SetColor("_Color", new Color(0.5f, 0.5f, 1f, 1f));
         yield return new WaitForSeconds(duration);
         shieldActive = false;
         GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.white);
+        rv.Remove();
     }
 
     IEnumerator SpeedBoost(float duration, float multiplier) {
@@ -200,9 +207,14 @@ public class Player : MonoBehaviour
     }
 
     IEnumerator Magnet(float duration, float radius) {
+        rv = new MagnetDecorator(rv, MagnetCircle);
         GetComponent<Collector>().SetRadius(radius);
+        MagnetCircle.SetActive(true);
+        float scale = radius * 12;
+        MagnetCircle.GetComponent<Transform>().localScale = new Vector3(scale, scale, scale);
         yield return new WaitForSeconds(duration);
         GetComponent<Collector>().ResetRadius();
+        MagnetCircle.SetActive(false);
+        rv.Remove();
     }
-
 }
