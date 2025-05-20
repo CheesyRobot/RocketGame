@@ -43,6 +43,7 @@ public class SessionsProfile : MonoBehaviour
 
     public void Save(ref SessionsData data)
     {
+        data.Sessions = new();
         foreach(Session ses in Sessions)
         {
             ASessionData newSession = new();

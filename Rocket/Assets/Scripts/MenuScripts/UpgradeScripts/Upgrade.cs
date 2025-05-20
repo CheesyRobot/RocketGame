@@ -7,8 +7,8 @@ public class Upgrade : ShopUpgrade
         this.Name = name;
         this.Description = description;
         this.cost = cost;
-        this.isSoldOut = false;
-        this.level = 0;
+        this.isSoldOut = isSoldOut;
+        this.level = isSoldOut? 1:0;
     }
 
     public Upgrade()

@@ -34,8 +34,8 @@ public class ShopWindow : MonoBehaviour
         3. Head - lemia maksimalų raketos greitį. 3 lygiai.
         4. Fuel storage - lemia maksimalią kuro talpą. 5 lygiai.
         5. Rocket engineer - pasyviai ir pastoviai prideda būklės taškų per laiko vienetą.*/
-        int[] levels = (RocketStartingProfile.Instance.UpgradeLevels.Length == 0 || 
-            RocketStartingProfile.Instance.UpgradeLevels == null)? new int[Upgrades.Count]: RocketStartingProfile.Instance.UpgradeLevels;
+        int[] levels = (RocketStartingProfile.Instance.UpgradeLevels.Count == 0 || 
+            RocketStartingProfile.Instance.UpgradeLevels == null)? new int[Upgrades.Count]: RocketStartingProfile.Instance.UpgradeLevels.ToArray();
         UpgradeDataObject dat = Upgrades.ElementAt(0);
         ShopUpgrade test = new Upgrade(dat.Name, dat.Description, dat.cost, dat.isSoldOut);
         test = new UpgradeValue(new LeveledUpgrade(test, levels[0], dat.maxLevel), dat.Values[0]);
@@ -74,7 +74,32 @@ public class ShopWindow : MonoBehaviour
             text[1].SetText(upg.GetDescription());
             text[3].SetText($"{upg.GetCost()}");
             text[5].SetText($"{upg.GetLevel()}");
-            newUpgrade[i++].GetComponentInChildren<Button>().name = upg.GetName();
+            Button button = newUpgrade[i++].GetComponentInChildren<Button>();
+            button.name = upg.GetName();
+            if (upg.IsSoldOut())
+            {
+                button.enabled = false;
+                button.GetComponent<Image>().color = button.colors.disabledColor;
+                Destroy(text[2]);
+                Destroy(text[3]);
+            }
+        }
+    }
+
+    public void UpdateUpgrade(ShopUpgrade upg, int index)
+    {
+        money.SetText($"{RocketStartingProfile.Instance.money}");
+        GameObject newUpgrade = GameObject.FindGameObjectsWithTag("Upgrade")[index];
+        TextMeshProUGUI[] text = newUpgrade.GetComponentsInChildren<TextMeshProUGUI>();
+        text[3].SetText($"{upg.GetCost()}");
+        text[5].SetText($"{upg.GetLevel()}");
+        Button button = newUpgrade.GetComponentInChildren<Button>();
+        if (upg.IsSoldOut())
+        {
+            button.enabled = false;
+            button.GetComponent<Image>().color = button.colors.disabledColor;
+            Destroy(text[2]);
+            Destroy(text[3]);
         }
     }
 
@@ -91,8 +116,10 @@ public class ShopWindow : MonoBehaviour
             case "Armor":
                 upg = UpgradeList.ElementAt(0);
                 if (upg.GetCost() <= RocketStartingProfile.Instance.money){
-                    upg.UpgradeBought();
+                    RocketStartingProfile.Instance.money -= upg.GetCost();
                     RocketStartingProfile.Instance.healthValue += (int)upg.GetValue();
+                    upg.UpgradeBought();
+                    UpdateUpgrade(upg,0);
                 }
                 else
                     StartCoroutine(ErrorButtonColor(but,want,temp));
@@ -100,48 +127,54 @@ public class ShopWindow : MonoBehaviour
             case "Engine":
                 upg = UpgradeList.ElementAt(1);
                 if (upg.GetCost() <= RocketStartingProfile.Instance.money){
-                    upg.UpgradeBought();
+                    RocketStartingProfile.Instance.money -= upg.GetCost();
                     RocketStartingProfile.Instance.engineValue = (int)upg.GetValue();
+                    upg.UpgradeBought();
+                    UpdateUpgrade(upg, 1);
                 }
                 else
                     StartCoroutine(ErrorButtonColor(but, want, temp));
                 break;
             case "Flaps":
                 upg = UpgradeList.ElementAt(2);
-                if (upg.GetCost() <= RocketStartingProfile.Instance.money)
-                {
-                    upg.UpgradeBought();
+                if (upg.GetCost() <= RocketStartingProfile.Instance.money){
+                    RocketStartingProfile.Instance.money -= upg.GetCost();
                     RocketStartingProfile.Instance.flapValue = (int)upg.GetValue();
+                    upg.UpgradeBought();
+                    UpdateUpgrade(upg, 2);
                 }
                 else
                     StartCoroutine(ErrorButtonColor(but, want, temp));
                 break;
             case "Head":
                 upg = UpgradeList.ElementAt(3);
-                if (upg.GetCost() <= RocketStartingProfile.Instance.money)
-                {
-                    upg.UpgradeBought();
+                if (upg.GetCost() <= RocketStartingProfile.Instance.money){
+                    RocketStartingProfile.Instance.money -= upg.GetCost();
                     RocketStartingProfile.Instance.headValue = (int)upg.GetValue();
+                    upg.UpgradeBought();
+                    UpdateUpgrade(upg, 3);
                 }
                 else
                     StartCoroutine(ErrorButtonColor(but, want, temp));
                 break;
             case "Fuel Storage":
                 upg = UpgradeList.ElementAt(4);
-                if (upg.GetCost() <= RocketStartingProfile.Instance.money)
-                {
-                    upg.UpgradeBought();
+                if (upg.GetCost() <= RocketStartingProfile.Instance.money){
+                    RocketStartingProfile.Instance.money -= upg.GetCost();
                     RocketStartingProfile.Instance.fuelValue += (int)upg.GetValue();
+                    upg.UpgradeBought();
+                    UpdateUpgrade(upg, 4);
                 }
                 else
                     StartCoroutine(ErrorButtonColor(but, want, temp));
                 break;
-            case "Rocket engineer":
-                upg = UpgradeList.ElementAt(2);
-                if (upg.GetCost() <= RocketStartingProfile.Instance.money)
-                {
-                    upg.UpgradeBought();
+            case "Rocket Engineer":
+                upg = UpgradeList.ElementAt(5);
+                if (upg.GetCost() <= RocketStartingProfile.Instance.money){
+                    RocketStartingProfile.Instance.money -= upg.GetCost();
                     RocketStartingProfile.Instance.hasEngineer = true;
+                    upg.UpgradeBought();
+                    UpdateUpgrade(upg, 5);
                 }
                 else
                     StartCoroutine(ErrorButtonColor(but, want, temp));
@@ -172,6 +205,6 @@ public class ShopWindow : MonoBehaviour
         {
             UpgradeLevels.Add(upg.GetLevel());
         }
-        RocketStartingProfile.Instance.UpgradeLevels = UpgradeLevels.ToArray();
+        RocketStartingProfile.Instance.UpgradeLevels = UpgradeLevels;
     }
 }

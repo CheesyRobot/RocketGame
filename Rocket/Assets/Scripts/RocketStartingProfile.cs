@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RocketStartingProfile : MonoBehaviour
@@ -29,11 +31,11 @@ public class RocketStartingProfile : MonoBehaviour
     public bool hasEngineer { get; set; }
     public bool hasDetector { get; set; }
     public Color rocketColor { get; set; }
-    public int[] UpgradeLevels { get; set; }
+    public List<int> UpgradeLevels { get; set; }
 
     private RocketStartingProfile()
     {
-        playerName = "Spacey";
+        playerName = "";
         money = 0;
         healthValue = 100;
         engineValue = 1;
@@ -44,22 +46,12 @@ public class RocketStartingProfile : MonoBehaviour
         hasEngineer = false;
         hasDetector = false;
         rocketColor = Color.red;
-        UpgradeLevels = new int[6];
+        UpgradeLevels = new();
     }
-
-    /*public static RocketStartingProfile GetInstance()
-    {
-        if (instance == null)
-        { 
-            instance = new RocketStartingProfile();
-        }
-        return instance;
-    }*/
 
     public void AddMoney(int amount)
     {
         money += amount;
-        //RocketStartingProfile a = GetInstance();
     }
 
     public void Save(ref ProfileData data)
@@ -75,7 +67,7 @@ public class RocketStartingProfile : MonoBehaviour
         data.hasEngineer = hasEngineer;
         data.hasDetector = hasDetector;
         data.rocketColor = rocketColor;
-        data.UpgradeLevels = UpgradeLevels;
+        data.UpgradeLevels = UpgradeLevels.ToArray();
     }
 
     public void Load(ProfileData data)
@@ -91,7 +83,7 @@ public class RocketStartingProfile : MonoBehaviour
         hasEngineer = data.hasEngineer;
         hasDetector = data.hasDetector;
         rocketColor = data.rocketColor;
-        UpgradeLevels = data.UpgradeLevels;
+        UpgradeLevels = data.UpgradeLevels.ToList();
     }
 
 }
