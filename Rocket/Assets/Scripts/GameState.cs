@@ -52,6 +52,7 @@ public class GameState : MonoBehaviour
     {
         Time.timeScale = 0;
         isPaused = true;
+        player.Move();
     }
     private void UnpauseTime()
     {

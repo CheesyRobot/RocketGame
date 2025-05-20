@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4742845509288299876}
   - component: {fileID: 4511958008219308580}
+  - component: {fileID: 8897334764777970484}
   - component: {fileID: 9168514982305365474}
   - component: {fileID: 9073050420985543650}
-  - component: {fileID: 8897334764777970484}
   m_Layer: 0
   m_Name: Airplane
   m_TagString: Untagged
@@ -90,6 +90,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8897334764777970484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487044769700659778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b59595e0fae18f8b095098fb25b590d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedX: -2
+  speedY: 0
+  random: 0
+  minHeight: 200
+  maxHeight: 1000
 --- !u!50 &9168514982305365474
 Rigidbody2D:
   serializedVersion: 5
@@ -403,17 +420,3 @@ PolygonCollider2D:
       - {x: -1.5799999, y: 1.11}
       - {x: -2.44, y: 1.11}
   m_UseDelaunayMesh: 0
---- !u!114 &8897334764777970484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3487044769700659778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b59595e0fae18f8b095098fb25b590d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedX: -2
-  speedY: 0

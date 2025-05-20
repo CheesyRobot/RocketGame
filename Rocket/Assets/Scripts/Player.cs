@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float rotationSpeed;
-    public float acceleration;
-    public float brakeValue;
-    public float maxSpeed;
-    public float fuelConsumption;
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float acceleration;
+    [SerializeField] private float brakeValue;
+    [SerializeField] private float maxSpeed;
+    [SerializeField] private float fuelConsumption;
     [SerializeField] private DisplayBar FuelBar;
     [SerializeField] private DisplayBar HealthBar;
     [SerializeField] private TextMeshProUGUI HeightText;
@@ -17,14 +18,16 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject Exhaust;
     [SerializeField] private LayerMask CollidableMask;
     [SerializeField] SpriteRenderer FinsRenderer;
-    public float fuel;
+    public float fuel {get; set;}
     private int maxFuel;
-    public float health;
+    public float health {get; set;}
     private int maxHealth;
-    public int heightScore;
-    public int coinsCollected;
+    public int heightScore {get; set;}
+    public int coinsCollected {get; set;}
     private bool speedBoost;
     private bool shieldActive;
+    private bool rocketEngineer;
+    private int passiveRepairValue;
     private Vector2 speed;
     private Rigidbody2D rb2d;
     private float defaultDampening;
@@ -32,7 +35,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         InitializeValues();
-        Exhaust.SetActive(false);
+        InvokeRepeating("RepairPassive", 1f, 1f);
         rb2d = GetComponent<Rigidbody2D>();
         defaultDampening = rb2d.linearDamping;
     }
@@ -47,12 +50,13 @@ public class Player : MonoBehaviour
         CoinsText.text = coinsCollected.ToString();
     }
 
-    private void Move() {
+    public void Move() {
         Exhaust.SetActive(false);
         float horizontalInput = Input.GetAxis ("Horizontal");
         float verticalInput = Input.GetAxis ("Vertical");
 
-        rb2d.transform.Rotate(0f, 0f, -horizontalInput * rotationSpeed, Space.Self);
+        if (Time.timeScale != 0)
+            rb2d.transform.Rotate(0f, 0f, -horizontalInput * rotationSpeed, Space.Self);
         //rb2d.SetRotation(rb2d.rotation - horizontalInput * rotationSpeed);
         //rb2d.MoveRotation(-horizontalInput * rotationSpeed);
         float braking = verticalInput < 0? brakeValue : 0;
@@ -77,21 +81,37 @@ public class Player : MonoBehaviour
 
         if(verticalInput > 0 && fuel >= 0.00001) {
             Exhaust.SetActive(true);
-            RestoreFuel(-fuelConsumption / 1000);
+            if (Time.timeScale != 0)
+                RestoreFuel(-fuelConsumption / 1000);
         }
         
         //rb2d.linearVelocity = new Vector2 (verticalInput * speed * movement.x, verticalInput * speed * movement.y);
     }
 
     private void InitializeValues() {
-        maxHealth = 100;
-        health = 100;
-        maxFuel = 100;
-        fuel = 100;
+        // maxHealth = 100;
+        // health = 100;
+        // maxFuel = 100;
+        // fuel = 100;
+        // speedBoost = false;
+        // heightScore = 0;
+        // coinsCollected = 0;
+        // shieldActive = false;
+        RocketStartingProfile p = RocketStartingProfile.GetInstance();
+        maxHealth = p.healthValue;
+        health = maxHealth;
+        maxFuel = p.fuelValue;
+        brakeValue = p.flapValue;
+        maxSpeed = p.headValue;
+        fuel = maxFuel;
+        passiveRepairValue = p.passiveRepairValue;
+        rocketEngineer = p.hasEngineer;
         speedBoost = false;
         heightScore = 0;
         coinsCollected = 0;
         shieldActive = false;
+        FinsRenderer.material.SetColor("_Color", p.rocketColor);
+        Exhaust.SetActive(false);
     }
 
     public void RestoreHealth(float amount) {
@@ -109,6 +129,12 @@ public class Player : MonoBehaviour
         fuel += amount;
         fuel = Mathf.Clamp(fuel, 0, maxFuel);
         FuelBar.SetValue(fuel, maxFuel);
+    }
+
+    public void RepairPassive () {
+        if (rocketEngineer) {
+            RestoreHealth(passiveRepairValue);
+        }
     }
 
     public void AddCoins(int amount) {
