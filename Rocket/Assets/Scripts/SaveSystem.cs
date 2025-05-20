@@ -37,7 +37,6 @@ public class SaveSystem : MonoBehaviour
 
     public void OnApplicationQuit()
     {
-        Debug.Log("saved");
         Save();
     }
 
@@ -56,7 +55,7 @@ public class SaveSystem : MonoBehaviour
 
     public static void Save()
     {
-        Debug.Log("saving...");
+        //Debug.Log("saving...");
         HandleSaveData();
         File.WriteAllText(SaveFileName(), JsonUtility.ToJson(saveData, true));
     }
@@ -69,7 +68,7 @@ public class SaveSystem : MonoBehaviour
 
     public static void Load()
     {
-        Debug.Log("loading...");
+        //Debug.Log("loading...");
         string saveContent = null;
         if (!File.Exists(SaveFileName()))
         {
