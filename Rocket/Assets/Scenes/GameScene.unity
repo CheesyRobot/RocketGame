@@ -258,7 +258,7 @@ MonoBehaviour:
   acceleration: 1
   brakeValue: 1
   maxSpeed: 5
-  fuelConsumption: 8
+  fuelConsumption: 20
   FuelBar: {fileID: 1781234475}
   HealthBar: {fileID: 1039867389}
   HeightText: {fileID: 847207230}
@@ -645,8 +645,8 @@ Transform:
   m_GameObject: {fileID: 191909958}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.04, y: -1.5, z: 0}
-  m_LocalScale: {x: 1000, y: 1, z: 1}
+  m_LocalPosition: {x: 0.04, y: -2.1736, z: 0}
+  m_LocalScale: {x: 1000, y: 2.3471, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
