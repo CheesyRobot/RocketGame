@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
         InitializeValues();
         InvokeRepeating("RepairPassive", 1f, 1f);
         rb2d = GetComponent<Rigidbody2D>();
+        rb2d.linearVelocity = new Vector2(0, 0);
         defaultDampening = rb2d.linearDamping;
         rv = new BaseRocket(gameObject);
         rv.Display();
@@ -46,34 +47,41 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Move();
-        if (Input.GetKeyDown(KeyCode.Space))
-            ActivateSpeedBoost(2, 1);
+        
         heightScore = Math.Max(heightScore, (int)rb2d.position.y);
         HeightText.text = ((int) rb2d.position.y).ToString() + " m";
         CoinsText.text = coinsCollected.ToString();
     }
 
-    public void Move() {
-        Exhaust.SetActive(false);
-        float horizontalInput = Input.GetAxis ("Horizontal");
-        float verticalInput = Input.GetAxis ("Vertical");
+    void FixedUpdate()
+    {
+        Move();
+        if (Input.GetKeyDown(KeyCode.Space))
+            ActivateSpeedBoost(2, 1);
+    }
 
-        if (Time.timeScale != 0)
-            rb2d.transform.Rotate(0f, 0f, -horizontalInput * rotationSpeed, Space.Self);
+    public void Move()
+    {
+        Exhaust.SetActive(false);
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        if (Time.timeScale != 0 && horizontalInput != 0)
+            rb2d.transform.Rotate(0f, 0f, -horizontalInput * rotationSpeed * 4, Space.Self);
         //rb2d.SetRotation(rb2d.rotation - horizontalInput * rotationSpeed);
         //rb2d.MoveRotation(-horizontalInput * rotationSpeed);
-        float braking = verticalInput < 0? brakeValue : 0;
-        float forward = verticalInput > 0? verticalInput : 0;
+        float braking = verticalInput < 0 ? brakeValue : 0;
+        float forward = verticalInput > 0 ? verticalInput : 0;
         speed = rb2d.linearVelocity;
-        Vector3 rotation = transform.rotation * new Vector3(0,1,0);
+        Vector3 rotation = transform.rotation * new Vector3(0, 1, 0);
         // if (speed.magnitude < maxSpeed && fuel >= 0.00001) {
         //     speed.x += forward * acceleration / 100 * rotation.x;
         //     speed.y += forward * acceleration / 100 * rotation.y;
         // }
-        if (fuel >= 0.00001) {
-            speed.x += forward * acceleration / 100 * rotation.x;
-            speed.y += forward * acceleration / 100 * rotation.y;
+        if (fuel >= 0.00001)
+        {
+            speed.x += forward * acceleration / 20 * rotation.x;
+            speed.y += forward * acceleration / 20 * rotation.y;
         }
         // speed.x += forward * acceleration * rotation.x;
         // speed.y += forward * acceleration * rotation.y;
@@ -83,12 +91,13 @@ public class Player : MonoBehaviour
         rb2d.linearDamping = defaultDampening + braking;
         rb2d.linearVelocity = new Vector2(speed.x, speed.y);
 
-        if(verticalInput > 0 && fuel >= 0.00001) {
+        if (verticalInput > 0 && fuel >= 0.00001)
+        {
             Exhaust.SetActive(true);
             if (Time.timeScale != 0)
-                RestoreFuel(-fuelConsumption / 1000);
+                RestoreFuel(-fuelConsumption / 500);
         }
-        
+
         //rb2d.linearVelocity = new Vector2 (verticalInput * speed * movement.x, verticalInput * speed * movement.y);
     }
 
@@ -106,6 +115,8 @@ public class Player : MonoBehaviour
         health = maxHealth;
         maxFuel = p.fuelValue;
         brakeValue = p.flapValue;
+        rotationSpeed = p.flapValue * 0.2f;
+        acceleration = p.engineValue;
         maxSpeed = p.headValue;
         fuel = maxFuel;
         passiveRepairValue = p.passiveRepairValue;
